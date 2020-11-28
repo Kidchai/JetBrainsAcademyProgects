@@ -3,10 +3,10 @@ package bot;
 import java.util.Scanner;
 
 public class SimpleBot {
-    final static Scanner scanner = new Scanner(System.in); // Do not change this line
+    final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        greet("Imp", "2020"); // change it as you need
+        greet("Imp", "2020");
         remindName();
         guessAge();
         count();

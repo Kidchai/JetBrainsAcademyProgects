@@ -8,7 +8,7 @@ public class Main {
         var scanner = new Scanner(System.in);
         var checkCodeLength = scanner.nextLine();
         int codeLength;
-        try {codeLength = Integer.parseInt(checkCodeLength); }
+        try { codeLength = Integer.parseInt(checkCodeLength); }
         catch (Exception e) {
             System.out.println("Error: " + "\"" + checkCodeLength + "\"" + " isn't a valid number.");
             return;
@@ -18,7 +18,13 @@ public class Main {
             return;
         }
         System.out.println("Input the number of possible symbols in the code:");
-        var numbersOfSymbols = scanner.nextInt();
+        var checkNumberOfSymbols = scanner.nextLine();
+        int numbersOfSymbols;
+        try { numbersOfSymbols = Integer.parseInt(checkNumberOfSymbols); }
+        catch (Exception e) {
+            System.out.println("Error: " + "\"" + checkNumberOfSymbols + "\"" + " isn't a valid number.");
+            return;
+        }
         if (numbersOfSymbols < codeLength) {
             System.out.println("Error: it's not possible to generate a code with a length of " + codeLength +
                     " with " + numbersOfSymbols + " unique symbols.");

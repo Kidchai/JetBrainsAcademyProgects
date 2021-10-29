@@ -6,15 +6,28 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Please, enter the secret code's length:");
         var scanner = new Scanner(System.in);
-        var codeLength = scanner.nextInt();
+        var checkCodeLength = scanner.nextLine();
+        int codeLength;
+        try {codeLength = Integer.parseInt(checkCodeLength); }
+        catch (Exception e) {
+            System.out.println("Error: " + "\"" + checkCodeLength + "\"" + " isn't a valid number.");
+            return;
+        }
+        if (codeLength <= 0) {
+            System.out.println("Error: it's not possible to generate a code with a length of " + codeLength + " symbols.");
+            return;
+        }
         System.out.println("Input the number of possible symbols in the code:");
         var numbersOfSymbols = scanner.nextInt();
-        var secretCode = generateRandomCode(codeLength, numbersOfSymbols);
-        if (codeLength <= 36) {
-            System.out.println(infoOfCode(codeLength, numbersOfSymbols));
-            System.out.println("Okay, let's start a game!");
-            checkAnswer(codeLength, secretCode);
+        if (numbersOfSymbols < codeLength) {
+            System.out.println("Error: it's not possible to generate a code with a length of " + codeLength +
+                    " with " + numbersOfSymbols + " unique symbols.");
+            return;
         }
+        var secretCode = generateRandomCode(codeLength, numbersOfSymbols);
+        System.out.println(infoOfCode(codeLength, numbersOfSymbols));
+        System.out.println("Okay, let's start a game!");
+        checkAnswer(codeLength, secretCode);
     }
 
     static String infoOfCode(int codeLength, int numbersOfSymbols) {
@@ -88,10 +101,15 @@ public class Main {
         if (codeLength > 36) {
             System.out.println("Error: can't generate a secret number with a length of " + codeLength +
                                " because there aren't enough unique digits.");
-            return null;
+            System.exit(0);
         }
         String chars = "0123456789abcdefghijklmnopqrstuvwxyz";
-        String finalChars = chars.substring(0, numberOfSymbols - 1);
+        String finalChars = null;
+        try { finalChars = chars.substring(0, numberOfSymbols); }
+        catch (StringIndexOutOfBoundsException e) {
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            System.exit(0);
+        }
         var random = new Random();
         var code = "";
         do {

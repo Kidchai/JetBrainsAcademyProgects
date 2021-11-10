@@ -2,6 +2,7 @@ package cinema;
 import java.util.Scanner;
 
 public class Cinema {
+    static boolean shouldWork = true;
 
     public static void main(String[] args) {
         System.out.println("Enter the number of rows:");
@@ -24,6 +25,28 @@ public class Cinema {
                 }
             }
         }
+        while (shouldWork) {
+            System.out.println("1. Show the seats\n" +
+                    "2. Buy a ticket\n" +
+                    "0. Exit");
+            int option = scanner.nextInt();
+            switch (option) {
+                case 1:
+                    showSeats(array);
+                    break;
+                case 2:
+                    buyTicket(numberOfRows, numberOfSeatsInRow, array);
+                    break;
+                case 0:
+                    shouldWork = false;
+                    break;
+                default:
+                    System.out.println("Error. Please, try again");
+            }
+        }
+    }
+
+    private static void showSeats(char[][] array) {
         System.out.println("Cinema:");
         for(char[] a : array) {
             for(char i : a) {
@@ -31,6 +54,10 @@ public class Cinema {
             }
             System.out.println("");
         }
+    }
+
+    private static void buyTicket(int numberOfRows, int numberOfSeatsInRow, char[][] array) {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a row number:");
         int pickedRow = scanner.nextInt();
         System.out.println("Enter a seat number in that row:");
@@ -43,12 +70,5 @@ public class Cinema {
         }
         array[pickedRow][pickedSeat] = 'B';
         System.out.println("Ticket price: $" + price);
-        System.out.println("Cinema:");
-        for(char[] a : array) {
-            for(char i : a) {
-                System.out.print(i + " ");
-            }
-            System.out.println("");
-        }
     }
 }

@@ -9,20 +9,46 @@ public class Cinema {
         int numberOfRows = scanner.nextInt();
         System.out.println("Enter the number of seats in each row:");
         int numberOfSeatsInRow = scanner.nextInt();
-        int totalIncome = 0;
-        if (numberOfRows * numberOfSeatsInRow <= 60) {
-            totalIncome = numberOfRows * numberOfSeatsInRow * 10;
-        } else {
-            if (numberOfRows % 2 == 0) {
-                int frontAndBackRows = numberOfRows / 2;
-                totalIncome = (frontAndBackRows * numberOfSeatsInRow * 10) + (frontAndBackRows * numberOfSeatsInRow * 8);
-            } else {
-                int frontRows = numberOfRows / 2;
-                int backRows = numberOfRows / 2 + 1;
-                totalIncome = (frontRows * numberOfSeatsInRow * 10) + (backRows *numberOfSeatsInRow * 8);
+        char[][] array = new char[numberOfRows + 1][numberOfSeatsInRow + 1];
+        int REDIX = 10;
+        for(int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (i == 0 && j == 0) {
+                    array[i][j] = ' ';
+                } else if (i == 0) {
+                    array[i][j] = Character.forDigit(j, REDIX);
+                } else if (j == 0) {
+                    array[i][j] = Character.forDigit(i, REDIX);
+                } else {
+                    array[i][j] = 'S';
+                }
             }
         }
-        System.out.println("Total income:");
-        System.out.println("$" + totalIncome);
+        System.out.println("Cinema:");
+        for(char[] a : array) {
+            for(char i : a) {
+                System.out.print(i + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("Enter a row number:");
+        int pickedRow = scanner.nextInt();
+        System.out.println("Enter a seat number in that row:");
+        int pickedSeat = scanner.nextInt();
+        int price = 0;
+        if (numberOfRows * numberOfSeatsInRow > 60 && pickedRow > numberOfRows / 2) {
+            price = 8;
+        } else {
+            price = 10;
+        }
+        array[pickedRow][pickedSeat] = 'B';
+        System.out.println("Ticket price: $" + price);
+        System.out.println("Cinema:");
+        for(char[] a : array) {
+            for(char i : a) {
+                System.out.print(i + " ");
+            }
+            System.out.println("");
+        }
     }
 }

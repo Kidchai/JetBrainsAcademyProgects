@@ -2,20 +2,21 @@ package cinema;
 import java.util.Scanner;
 
 public class Cinema {
-    static boolean shouldWork = true;
-    static int purchasedTickets = 0;
-    static int currentIncome = 0;
-    static int numberOfRows = 0;
-    static int numberOfSeatsInRow = 0;
+    boolean shouldWork = true;
+    int purchasedTickets = 0;
+    int currentIncome = 0;
+    int numberOfRows = 0;
+    int numberOfSeatsInRow = 0;
 
     public static void main(String[] args) {
+        Cinema cinema = new Cinema();
         int[] ticketInfo = new int[2];
         System.out.println("Enter the number of rows:");
         Scanner scanner = new Scanner(System.in);
-        numberOfRows = scanner.nextInt();
+        cinema.numberOfRows = scanner.nextInt();
         System.out.println("Enter the number of seats in each row:");
-        numberOfSeatsInRow = scanner.nextInt();
-        char[][] array = new char[numberOfRows + 1][numberOfSeatsInRow + 1];
+        cinema.numberOfSeatsInRow = scanner.nextInt();
+        char[][] array = new char[cinema.numberOfRows + 1][cinema.numberOfSeatsInRow + 1];
         int REDIX = 10;
         for(int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
@@ -30,7 +31,7 @@ public class Cinema {
                 }
             }
         }
-        while (shouldWork) {
+        while (cinema.shouldWork) {
             System.out.println("1. Show the seats\n" +
                     "2. Buy a ticket\n" +
                     "3. Statistics\n" +
@@ -38,16 +39,16 @@ public class Cinema {
             int option = scanner.nextInt();
             switch (option) {
                 case 1:
-                    showSeats(array);
+                    cinema.showSeats(array);
                     break;
                 case 2:
-                    ticketInfo = buyTicket(array);
+                    ticketInfo = cinema.buyTicket(array);
                     break;
                 case 3:
-                    showStatistics(ticketInfo);
+                    cinema.showStatistics(ticketInfo);
                     break;
                 case 0:
-                    shouldWork = false;
+                    cinema.shouldWork = false;
                     break;
                 default:
                     System.out.println("Error. Please, try again");
@@ -55,7 +56,7 @@ public class Cinema {
         }
     }
 
-    private static void showSeats(char[][] array) {
+    private void showSeats(char[][] array) {
         System.out.println("Cinema:");
         for(char[] a : array) {
             for(char i : a) {
@@ -65,7 +66,7 @@ public class Cinema {
         }
     }
 
-    public static int[] buyTicket(char[][] array) {
+    public int[] buyTicket(char[][] array) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a row number:");
         int pickedRow = scanner.nextInt();
@@ -94,7 +95,7 @@ public class Cinema {
         return new int[] {currentIncome, purchasedTickets};
     }
 
-    private static void showStatistics(int[] ticketInfo) {
+    private void showStatistics(int[] ticketInfo) {
         int totalIncome = 0;
         if (numberOfRows * numberOfSeatsInRow > 60) {
             totalIncome = numberOfSeatsInRow * (numberOfRows / 2) * 10 +
@@ -107,7 +108,6 @@ public class Cinema {
         float percentage = purchasedTickets / allSeats * 100;
         System.out.printf("Number of purchased tickets: %d\n", ticketInfo[1]);
         System.out.printf("Percentage: %.2f%%\n", percentage);
-        //System.out.println("Percentage: " + percentage + "%");
         System.out.printf("Current income: $%d\n", ticketInfo[0]);
         System.out.printf("Total income: $%d\n", totalIncome);
         System.out.println("");
